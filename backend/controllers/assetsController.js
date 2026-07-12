@@ -1,16 +1,28 @@
 const Asset = require("../models/assets");
 
 // Create Asset
+// Create Asset
 const createAsset = async (req, res) => {
     try {
+
         const {
             name,
-            assetTag,
             serialNumber,
             category,
             condition,
             location
         } = req.body;
+
+        // Generate Asset Tag Automatically
+        const lastAsset = await Asset.findOne().sort({ createdAt: -1 });
+
+        let assetTag = "AF-0001";
+
+        if (lastAsset) {
+            const lastNumber = parseInt(lastAsset.assetTag.split("-")[1]);
+
+            assetTag = `AF-${String(lastNumber + 1).padStart(4, "0")}`;
+        }
 
         const asset = await Asset.create({
             name,
@@ -28,10 +40,12 @@ const createAsset = async (req, res) => {
         });
 
     } catch (error) {
+
         res.status(500).json({
             success: false,
             message: error.message
         });
+
     }
 };
 
