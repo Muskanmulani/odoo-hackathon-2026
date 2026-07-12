@@ -1,0 +1,31 @@
+body{
+margin:0;
+font-family:Arial;
+}
+
+
+.sidebar{
+
+width:220px;
+height:100vh;
+background:#111827;
+padding:20px;
+
+}
+
+
+.sidebar a{
+
+display:block;
+color:white;
+text-decoration:none;
+padding:12px;
+
+}
+
+
+.sidebar a:hover{
+
+background:#374151;
+
+}
