@@ -28,7 +28,7 @@ function Login() {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        "http://10.248.6.16:5000/api/auth/login",
         formData
       );
 

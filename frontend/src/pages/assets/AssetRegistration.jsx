@@ -2,6 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 
 function AssetRegistration() {
+
   const [formData, setFormData] = useState({
     name: "",
     serialNumber: "",
@@ -20,18 +21,31 @@ function AssetRegistration() {
     });
   };
 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      setLoading(true);
 
-      await axios.post(
+      setLoading(true);
+      setMessage("");
+
+      const assetData = {
+        ...formData,
+        assetTag: "AF-" + Math.floor(1000 + Math.random() * 9000)
+      };
+
+
+      const response = await axios.post(
         "http://localhost:5000/api/assets",
-        formData
+        assetData
       );
 
+
+      console.log(response.data);
+
       setMessage("Asset Registered Successfully!");
+
 
       setFormData({
         name: "",
@@ -41,13 +55,23 @@ function AssetRegistration() {
         location: "",
       });
 
+
     } catch (error) {
-      console.log(error);
-      setMessage("Failed to register asset.");
+
+      console.log("Asset Registration Error:", error.response?.data || error.message);
+
+      setMessage(
+        error.response?.data?.message || 
+        "Failed to register asset."
+      );
+
     } finally {
+
       setLoading(false);
+
     }
   };
+
 
   return (
     <div className="container mt-4">
@@ -58,13 +82,16 @@ function AssetRegistration() {
           Register New Asset
         </h2>
 
+
         {message && (
           <div className="alert alert-info">
             {message}
           </div>
         )}
 
+
         <form onSubmit={handleSubmit}>
+
 
           <div className="mb-3">
             <label className="form-label">
@@ -77,10 +104,11 @@ function AssetRegistration() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              placeholder="Enter Asset Name"
               required
             />
           </div>
+
+
 
           <div className="mb-3">
             <label className="form-label">
@@ -93,10 +121,11 @@ function AssetRegistration() {
               name="serialNumber"
               value={formData.serialNumber}
               onChange={handleChange}
-              placeholder="Enter Serial Number"
               required
             />
           </div>
+
+
 
           <div className="mb-3">
             <label className="form-label">
@@ -110,6 +139,7 @@ function AssetRegistration() {
               onChange={handleChange}
               required
             >
+
               <option value="">
                 Select Category
               </option>
@@ -133,13 +163,19 @@ function AssetRegistration() {
               <option value="Furniture">
                 Furniture
               </option>
+
             </select>
+
           </div>
 
+
+
           <div className="mb-3">
+
             <label className="form-label">
               Condition
             </label>
+
 
             <select
               className="form-select"
@@ -148,6 +184,7 @@ function AssetRegistration() {
               onChange={handleChange}
               required
             >
+
               <option value="">
                 Select Condition
               </option>
@@ -167,13 +204,19 @@ function AssetRegistration() {
               <option value="Poor">
                 Poor
               </option>
+
             </select>
+
           </div>
 
+
+
           <div className="mb-4">
+
             <label className="form-label">
               Location
             </label>
+
 
             <input
               type="text"
@@ -181,18 +224,23 @@ function AssetRegistration() {
               name="location"
               value={formData.location}
               onChange={handleChange}
-              placeholder="Enter Location"
               required
             />
+
           </div>
+
+
 
           <button
             type="submit"
             className="btn btn-primary w-100"
             disabled={loading}
           >
+
             {loading ? "Registering..." : "Register Asset"}
+
           </button>
+
 
         </form>
 
@@ -201,5 +249,6 @@ function AssetRegistration() {
     </div>
   );
 }
+
 
 export default AssetRegistration;
