@@ -6,7 +6,7 @@ import Signup from "./pages/auth/Signup";
 import Dashboard from "./pages/dashboard/Dashboard";
 
 import AssetList from "./pages/assets/AssetList";
-import AddAsset from "./pages/assets/AssetRegistration";
+import AssetRegistration from "./pages/assets/AssetRegistration";
 import AllocateAsset from "./pages/assets/AssetAllocation";
 
 import Departments from "./pages/departments/Departments";
@@ -18,53 +18,67 @@ import Reports from "./pages/reports/Reports";
 
 import Layout from "./layouts/layout";
 
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
 
-function App(){
+        {/* Public Routes */}
+        <Route path="/" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
-return(
+        {/* Protected Layout Routes */}
+        <Route element={<Layout />}>
 
-<BrowserRouter>
+          <Route path="/dashboard" element={<Dashboard />} />
 
-<Routes>
+          <Route path="/assets" element={<AssetList />} />
 
-{/* Without Sidebar */}
+          <Route
+            path="/add-asset"
+            element={<AssetRegistration />}
+          />
 
-<Route path="/" element={<Login/>}/>
+          <Route
+            path="/assets/register"
+            element={<AssetRegistration />}
+          />
 
-<Route path="/signup" element={<Signup/>}/>
+          <Route
+            path="/allocate-asset"
+            element={<AllocateAsset />}
+          />
 
+          <Route
+            path="/departments"
+            element={<Departments />}
+          />
 
-{/* With Sidebar */}
+          <Route
+            path="/categories"
+            element={<Categories />}
+          />
 
-<Route element={<Layout/>}>
+          <Route
+            path="/maintenance"
+            element={<Maintenance />}
+          />
 
-<Route path="/dashboard" element={<Dashboard/>}/>
+          <Route
+            path="/booking"
+            element={<Booking />}
+          />
 
-<Route path="/assets" element={<AssetList/>}/>
+          <Route
+            path="/reports"
+            element={<Reports />}
+          />
 
-<Route path="/add-asset" element={<AddAsset/>}/>
+        </Route>
 
-<Route path="/allocate-asset" element={<AllocateAsset/>}/>
-
-<Route path="/departments" element={<Departments/>}/>
-
-<Route path="/categories" element={<Categories/>}/>
-
-<Route path="/maintenance" element={<Maintenance/>}/>
-
-<Route path="/booking" element={<Booking/>}/>
-
-<Route path="/reports" element={<Reports/>}/>
-
-</Route>
-
-
-</Routes>
-
-</BrowserRouter>
-
-)
-
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 export default App;
