@@ -4,6 +4,7 @@ const Asset = require("../models/assets");
 // Create Asset
 const createAsset = async (req, res) => {
     try {
+        console.log(req.body);
 
         const {
             name,
